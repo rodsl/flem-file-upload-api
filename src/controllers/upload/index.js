@@ -2,6 +2,7 @@ import multer from "multer";
 import fs from "fs";
 import { DateTime } from "luxon";
 import { prisma } from "services";
+import path from "path";
 
 export const upload = multer({
   storage: multer.diskStorage({
@@ -13,6 +14,7 @@ export const upload = multer({
       if (!fs.existsSync(dest)) {
         fs.mkdirSync(dest, { recursive: true });
       }
+      console.log(17, path.resolve(dest));
       req.dest = dest;
       // req.referenceObjId = referenceObjId;
       // req.fileCatalogList = [];

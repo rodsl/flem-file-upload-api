@@ -1,0 +1,11 @@
+services:
+ code:
+   build:
+     context: ./
+     dockerfile: Dockerfile.dev
+   ports:
+     - 4020:3000
+   volumes:
+     - ./:/root/app
+   working_dir: /root/app
+   command: yarn start

@@ -1,7 +1,5 @@
 import { apiAllowCors, prisma } from "services";
-import fs from "fs";
-import mime from "mime-types";
-import FormData from "form-data";
+import path from "path";
 
 const handler = async (req, res) => {
   switch (req.method) {
@@ -18,8 +16,11 @@ const handler = async (req, res) => {
 export default apiAllowCors(handler);
 const getFile = async (req, res) => {
   try {
-    const { fileId, referenceObjId } = req.query;
+    const { fileId, referenceObjId, appSource } = req.query;
+    const dest = `./storage/uploads/${appSource}/`;
 
+    
+    console.log(25, path.resolve(dest));
     if (!fileId && !referenceObjId)
       return res.status(400).json({
         status: 400,

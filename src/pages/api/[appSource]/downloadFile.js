@@ -1,7 +1,5 @@
 import { apiAllowCors, prisma } from "services";
 import fs from "fs";
-import mime from "mime-types";
-import FormData from "form-data";
 
 const handler = async (req, res) => {
   switch (req.method) {
@@ -35,9 +33,10 @@ const getFile = async (req, res) => {
 
     if (!fileDetails)
       return res.status(400).json({ status: 400, message: "file not found!" });
-
+    console.log(fileDetails.name);
     const file = await fs.promises.readFile(fileDetails.path);
-
+    res.setHeader("filename", encodeURI(fileDetails.name));
+    res.setHeader("file-content-type", fileDetails.contentType);
     return res.status(200).send(file);
   } catch (e) {
     /* handle error */
@@ -45,3 +44,4 @@ const getFile = async (req, res) => {
     return res.status(500).json(e.message);
   }
 };
+

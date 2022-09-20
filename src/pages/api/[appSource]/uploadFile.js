@@ -15,6 +15,7 @@ const handler = async (req, res) => {
 export default apiAllowCors(handler);
 
 const uploadFile = async (req, res) => {
+  console.log(18, "início da requisição");
   try {
     const { appSource, referenceObjId = "temp" } = req.query;
 
@@ -22,8 +23,9 @@ const uploadFile = async (req, res) => {
       return res
         .status(400)
         .json({ status: 400, message: "appSource is required!" });
-
+    console.log(25, "antes do middleware");
     await runMiddleware(req, res, upload.array("files"));
+    console.log(27, "depois do middleware");
 
     const { files } = req;
 
